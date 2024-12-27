@@ -22,7 +22,7 @@ def FScrenn1():
     post(1)
 
 def FScrenn2():
-    post(2, "https://www.youtube.com/watch?v=ZynaZugj0PY")
+    post(2, entree.get())
 
 def FScrenn3():
     post(3)
@@ -32,6 +32,11 @@ hello.pack(pady=10)  # Ajoute un espace vertical de 10 pixels
 
 Screen1 = Button(windows, text="Screen 1", command=FScrenn1)
 Screen1.pack(pady=10)  # Ajoute un espace vertical de 10 pixels
+
+expression = StringVar()
+expression.set("Lien YT")
+entree = Entry(windows, textvariable=expression, width=30)
+entree.pack(pady=10)  # Ajoute un espace vertical de 10 pixels
 
 Screen2 = Button(windows, text="Screen 2", command=FScrenn2)
 Screen2.pack(pady=10)  # Ajoute un espace vertical de 10 pixels
