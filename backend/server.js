@@ -32,9 +32,6 @@ app.post('/change-screen', (req, res) => {
     currentScreen = screen;
 
     if (screen === 'Screen2') {
-        if (isNaN(video) || video < 0) {
-            return res.status(400).json({ success: false, message: 'La vidéo doit être un nombre positif.' });
-        }
         currentVideo = video;
     }
 

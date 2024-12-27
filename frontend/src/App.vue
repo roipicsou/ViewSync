@@ -1,10 +1,6 @@
 <template>
   <div>
-    <!-- Affiche dynamiquement le composant de l'écran actuel -->
-    <component 
-      :is="currentScreenComponent" 
-      :currentVideo="currentVideo" 
-    />
+    <component :is="currentScreenComponent" :currentVideo="currentVideo" />
   </div>
 </template>
 
@@ -17,38 +13,32 @@ export default {
   data() {
     return {
       currentScreen: null, // Écran en cours
-      currentVideo: null, // Vidéo en cours (uniquement pour Screen2)
+      currentVideo: 0, // Vidéo en cours (par défaut 0)
       screenContents: {
         Screen1,
         Screen2,
         Screen3,
       },
-      autoRefreshInterval: null,
+      autoRefreshInterval: null, // Intervalle pour le rafraîchissement
     };
   },
   computed: {
     currentScreenComponent() {
-      // Renvoie le composant de l'écran actuel ou null si non défini
-      return this.screenContents[this.currentScreen] || null;
+      return this.screenContents[this.currentScreen] || null; // Composant par défaut si l'écran n'existe pas
     },
   },
   methods: {
-    // Récupère l'écran et la vidéo en cours depuis le backend
     async fetchCurrentScreen() {
       try {
         const response = await fetch('http://localhost:3000/current-screen');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
         const data = await response.json();
+        console.log('Données reçues :', data); // Debug
         this.currentScreen = data.screen;
-        this.currentVideo = data.video; // Met à jour la vidéo (si applicable)
+        this.currentVideo = data.video;
       } catch (error) {
         console.error('Erreur lors de la récupération de l\'écran actuel:', error);
-        alert('Impossible de récupérer les informations de l\'écran.');
       }
     },
-    // Change l'écran (et la vidéo pour Screen2) en envoyant une requête au backend
     async changeScreen(newScreen, video = null) {
       try {
         const body = video !== null ? { screen: newScreen, video } : { screen: newScreen };
@@ -62,25 +52,23 @@ export default {
 
         const data = await response.json();
         if (data.success) {
-          this.fetchCurrentScreen(); // Rafraîchit l'état après le changement
+          this.fetchCurrentScreen();
         } else {
           alert(data.message || 'Échec du changement d\'écran');
         }
       } catch (error) {
         console.error('Erreur lors du changement d\'écran:', error);
-        alert('Impossible de changer l\'écran.');
       }
     },
-    // Démarre la mise à jour automatique de l'écran
     startAutoRefresh() {
       this.fetchCurrentScreen(); // Appel initial
       this.autoRefreshInterval = setInterval(() => {
         this.fetchCurrentScreen();
-      }, 1000); // Rafraîchissement toutes les 1000 ms
+      }, 500); // Rafraîchissement toutes les 500 ms
     },
   },
   created() {
-    this.startAutoRefresh(); // Démarre le rafraîchissement automatique au chargement du composant
+    this.startAutoRefresh(); // Démarre le rafraîchissement automatique au chargement
   },
   beforeDestroy() {
     clearInterval(this.autoRefreshInterval); // Nettoie l'intervalle pour éviter les fuites de mémoire
@@ -89,5 +77,5 @@ export default {
 </script>
 
 <style scoped>
-/* Styles spécifiques au composant */
+/* Ajoutez vos styles spécifiques ici */
 </style>

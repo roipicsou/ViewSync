@@ -1,4 +1,6 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createManager } from '@vue-youtube/core';
+import { createApp } from 'vue';
 
-createApp(App).mount('#app')
+import app from './App.vue';
+
+createApp(app).use(createManager()).mount('#app');

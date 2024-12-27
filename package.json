@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@vue-youtube/core": "^0.0.6",
+    "vue": "^2.7.16"
+  }
+}
