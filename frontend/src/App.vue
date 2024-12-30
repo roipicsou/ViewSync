@@ -36,7 +36,7 @@ export default {
         this.currentScreen = data.screen;
         this.currentVideo = data.video;
       } catch (error) {
-        console.error('Erreur lors de la récupération de l\'écran actuel:', error);
+        console.error('Erreur lors de la récupération de l\'ecran actuel:', error);
       }
     },
     async changeScreen(newScreen, video = null) {
@@ -54,10 +54,27 @@ export default {
         if (data.success) {
           this.fetchCurrentScreen();
         } else {
-          alert(data.message || 'Échec du changement d\'écran');
+          alert(data.message || 'Echec du changement d\'ecran');
         }
       } catch (error) {
-        console.error('Erreur lors du changement d\'écran:', error);
+        console.error('Erreur lors du changement d\'ecran:', error);
+      }
+    },
+    async controlVideo(action) {
+      try {
+        const response = await fetch('http://localhost:3000/video-control', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ action }),
+        });
+        const data = await response.json();
+        if (!data.success) {
+          alert(data.message || 'Echec de la commande video');
+        }
+      } catch (error) {
+        console.error('Erreur lors de l\'envoi de la commande video:', error);
       }
     },
     startAutoRefresh() {

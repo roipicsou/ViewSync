@@ -31,17 +31,17 @@ hello = Label(windows, text="hello")
 hello.pack(pady=10)  # Ajoute un espace vertical de 10 pixels
 
 Screen1 = Button(windows, text="Screen 1", command=FScrenn1)
-Screen1.pack(pady=10)  # Ajoute un espace vertical de 10 pixels
+Screen1.pack(pady=10)
 
 expression = StringVar()
 expression.set("Lien YT")
 entree = Entry(windows, textvariable=expression, width=30)
-entree.pack(pady=10)  # Ajoute un espace vertical de 10 pixels
+entree.pack(pady=10)
 
 Screen2 = Button(windows, text="Screen 2", command=FScrenn2)
-Screen2.pack(pady=10)  # Ajoute un espace vertical de 10 pixels
+Screen2.pack(pady=10)
 
 Screen3 = Button(windows, text="Screen 3", command=FScrenn3)
-Screen3.pack(pady=10)  # Ajoute un espace vertical de 10 pixels
+Screen3.pack(pady=10)
 
 windows.mainloop()
